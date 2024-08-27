@@ -12,12 +12,37 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "잘해써~")
+		c.JSON(http.StatusOK,
+			gin.H{"status": "success", "message": "잘해써~"})
 	})
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
+	r.POST("/submit", func(c *gin.Context) {
+		var jsonData struct {
+			Name  string `json:"name" binding:"required"`
+			Email string `json:"email" binding:"required,email"`
+		}
+
+		if err := c.ShouldBindJSON(&jsonData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  "error",
+				"message": "Invaild JSON data",
+				"error":   err.Error(),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "success",
+			"message": "Data received successfully",
+			"data": gin.H{
+				"name":  jsonData.Name,
+				"email": jsonData.Email,
+			},
+		})
 	})
+
+	//ctx := context.Background()
+	//client, err := mongo.Connect(ctx, options.Client().ApplyURI())
 
 	r.Run(":5173")
 }
