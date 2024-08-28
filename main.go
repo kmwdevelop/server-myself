@@ -44,7 +44,7 @@ func main() {
 
 	db.InitMongoDB("mongodb+srv://test:1111@cluster0.rhxlati.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 	db.CreateCollection("stock")
-
+	db.InsertOne("stock")
 	r.Run(":5173")
 }
 
