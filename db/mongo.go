@@ -36,3 +36,17 @@ func DisconnectMongoDB() {
 	}
 	fmt.Println("Disconnected MongoDB")
 }
+
+func CreateCollection(collectionName string) {
+
+	// 데이터베이스 선택
+	database := client.Database("cluster0")
+
+	// 명시적으로 컬렉션 생성
+	collectionErr := database.CreateCollection(context.Background(), collectionName)
+	if collectionErr != nil {
+		panic(collectionErr)
+	}
+
+	fmt.Println("Created collection: " + collectionName)
+}
