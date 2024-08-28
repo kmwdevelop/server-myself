@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"server-myself/db"
 )
 
 //TIP To run your code, right-click the code and select <b>Run</b>. Alternatively, click
@@ -41,8 +42,7 @@ func main() {
 		})
 	})
 
-	//ctx := context.Background()
-	//client, err := mongo.Connect(ctx, options.Client().ApplyURI())
+	db.InitMongoDB("mongodb+srv://test:1111@cluster0.rhxlati.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 	r.Run(":5173")
 }
