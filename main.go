@@ -54,19 +54,16 @@ func main() {
 		})
 	})
 
+	// kakaoLogin
 	r.GET("/kakaoLogin", func(c *gin.Context) {
-
-		kakao.DoLogin()
-
-		c.JSON(http.StatusOK, gin.H{
-			"status":  "success",
-			"message": "오케이 로그인",
-		})
+		kakao.DoLogin(c.Writer, c.Request)
 	})
-	//
-	//db.InitMongoDB("mongodb+srv://test:1111@cluster0.rhxlati.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-	//db.CreateCollection("stock")
-	//db.InsertOne("stock")
+
+	// kakaoRedirect
+	r.GET("/kakaoRedirect", func(c *gin.Context) {
+		kakao.RedirectHandler(c.Writer, c.Request)
+	})
+
 	r.Run(":5174")
 }
 
